@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Navbars from "./components/Navbar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Cart from "./components/Cart";
+import ProductDetail from "./components/ProductDetail";
+import Product from "./components/Product";
+import { useState } from "react";
 
 function App() {
+  let [carts, setcarts] = useState([]);
+
+  let additem = (clothdata) => {
+    setcarts((a) => [...a, clothdata])
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <Navbars tcart={carts}/>
+        <Routes>
+          <Route path="/" element={<Product />} />
+          <Route
+            path="/ProductDetail/:id"
+            element={<ProductDetail cartitem={additem} />}
+          ></Route>
+          <Route path="/Cart" element={<Cart kcart={carts}/>}></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
