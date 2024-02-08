@@ -36,6 +36,7 @@ let Cart = ({ kcart, settocart }) => {
       }
       return item;
     });
+
     localStorage.setItem("info", JSON.stringify(updatedcart));
     setcartitem(updatedcart);
     settocart(updatedcart);

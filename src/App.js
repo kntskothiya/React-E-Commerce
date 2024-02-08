@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     let scart = JSON.parse(localStorage.getItem("info"));
-    setcarts(scart);
+    setcarts(scart || []);
   }, []);
 
   let additem = (clothdata) => {
