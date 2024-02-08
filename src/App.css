@@ -37,4 +37,8 @@ html, body{
     font-weight: 600;
     color: #444;
   }
+
+  .headingsearch{
+    flex-wrap: wrap;
+  }
   
