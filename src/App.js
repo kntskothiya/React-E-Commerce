@@ -13,18 +13,17 @@ function App() {
   let additem = (clothdata) => {
     setcarts((a) => [...a, clothdata])
   };
-
   return (
     <>
       <BrowserRouter>
-        <Navbars tcart={carts}/>
+        <Navbars kcart={carts}/>
         <Routes>
           <Route path="/" element={<Product />} />
           <Route
             path="/ProductDetail/:id"
             element={<ProductDetail cartitem={additem} />}
           ></Route>
-          <Route path="/Cart" element={<Cart kcart={carts}/>}></Route>
+          <Route path="/Cart" element={<Cart kcart={carts} settocart={setcarts}/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

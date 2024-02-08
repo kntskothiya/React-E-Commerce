@@ -1,30 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
 
 const Cart = ({ kcart }) => {
-  let [qty, setqty] = useState(kcart.map(() => 1));
+  let [qty, setqty] = useState([]);
+  let [datainfo, setdatainfo] = useState([]);
+
+  useEffect(() => {
+    let initialQty = [];
+    for (let i = 0; i < kcart.length; i++) {
+      initialQty.push(1);
+    }
+    setqty(initialQty);
+ 
+    let aaaa = JSON.parse(localStorage.getItem("info")) || [];
+    setdatainfo(aaaa);
+  }, [kcart]);
 
   let minus = (index) => {
     if (qty[index] > 0) {
-      qty[index]--;
-      setqty([...qty]);
+      setqty(prevQty => {
+        const newQty = [...prevQty];
+        newQty[index]--;
+        return newQty;
+      });
     }
   };
-
+  
   let plus = (index) => {
-    qty[index]++;
-    setqty([...qty]);
+    setqty(prevQty => {
+      const newQty = [...prevQty];
+      newQty[index]++;
+      return newQty;
+    });
   };
 
-let totalamt = kcart.reduce((total, item, index) => {
-  return total + item.price * qty[index];
-}, 0);
-
-  console.log(kcart.length)
+  let totalamt = 0;
+  for (let i = 0; i < kcart.length; i++) {
+    totalamt += kcart[i].price * qty[i];
+  }
 
   return (
     <>
-      {kcart.map((k, index) => (
+      {datainfo.map((k, index) => (
         <div key={k.id} className="d-flex justify-content-evenly">
           <div className="mt-5 mb-5">
             <img src={k.image} alt="Not Found" height={"200px"} />
@@ -47,5 +64,6 @@ let totalamt = kcart.reduce((total, item, index) => {
 };
 
 export default Cart;
+
 
 
