@@ -12,11 +12,11 @@ function App() {
 
   useEffect(() => {
     let scart = JSON.parse(localStorage.getItem("info"));
-    setcarts(scart||[]);
+    setcarts(scart);
   }, []);
 
   let additem = (clothdata) => {
-    setcarts((prevCart) => [...prevCart, clothdata]);
+    setcarts((prevcart) => [...prevcart, clothdata]);
   };
 
   return (

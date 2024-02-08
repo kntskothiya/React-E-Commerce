@@ -54,11 +54,11 @@ const ProductDetails = ({ cartitem }) => {
     }
   };
 
-  const updatelsquantity = (updatedquantity) => {
+  const updatelsquantity = (updatedqty) => {
     let available = JSON.parse(localStorage.getItem("info")) || [];
     let updatecart = available.map((item) => {
       if (item.id === clothdata.id) {
-        return { ...item, quantity: updatedquantity };
+        return { ...item, quantity: updatedqty };
       } else {
         return item;
       }
