@@ -11,11 +11,11 @@ const ProductDetails = ({ cartitem }) => {
   let clothdata = cloth.productsdata.find((clothwear) => clothwear.id == id);
 
   useEffect(() => {
-    let exist = JSON.parse(localStorage.getItem("info")) || [];
-    let foundItem = exist.find((item) => item.id === clothdata.id);
-    if (foundItem) {
+    let available = JSON.parse(localStorage.getItem("info")) || [];
+    let fitem = available.find((item) => item.id === clothdata.id);
+    if (fitem) {
       setsingle(true);
-      setquantity(foundItem.quantity);
+      setquantity(fitem.quantity);
     }
   }, [clothdata.id]);
 
@@ -35,8 +35,8 @@ const ProductDetails = ({ cartitem }) => {
   const addtocart = () => {
     if (!single) {
       cartitem({ ...clothdata, quantity });
-      let exist = JSON.parse(localStorage.getItem("info")) || [];
-      let update = [...exist, { ...clothdata, quantity }];
+      let available = JSON.parse(localStorage.getItem("info")) || [];
+      let update = [...available, { ...clothdata, quantity }];
       localStorage.setItem("info", JSON.stringify(update));
       setsingle(true);
     }
@@ -55,8 +55,8 @@ const ProductDetails = ({ cartitem }) => {
   };
 
   const updatelsquantity = (updatedquantity) => {
-    let exist = JSON.parse(localStorage.getItem("info")) || [];
-    let updatecart = exist.map((item) => {
+    let available = JSON.parse(localStorage.getItem("info")) || [];
+    let updatecart = available.map((item) => {
       if (item.id === clothdata.id) {
         return { ...item, quantity: updatedquantity };
       } else {
