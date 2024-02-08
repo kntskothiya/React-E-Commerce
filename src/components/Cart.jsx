@@ -1,10 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
 
-const Cart = ({ kcart }) => {
-  const removeFromCart = (itemId) => {
-    const updatedCart = kcart.filter((item) => item.id !== itemId);
-    localStorage.setItem("info", JSON.stringify(updatedCart));
+let Cart = ({ kcart, settocart }) => {
+  let [cartitem, setcartitem] = useState([]);
+
+  useEffect(() => {
+    let savecart = JSON.parse(localStorage.getItem("info")) || [];
+    setcartitem(savecart);
+    settocart(savecart);
+  }, [settocart]);
+
+  let remove = (kk) => {
+    let updatedcart = cartitem.filter((item) => item.id !== kk);
+    localStorage.setItem("info", JSON.stringify(updatedcart));
+    setcartitem(updatedcart);
+    settocart(updatedcart);
+  };
+
+  let plus = (kk) => {
+    let updatedcart = cartitem.map((item) => {
+      if (item.id === kk) {
+        return { ...item, quantity: item.quantity + 1 };
+      }
+      return item;
+    });
+    localStorage.setItem("info", JSON.stringify(updatedcart));
+    setcartitem(updatedcart);
+    settocart(updatedcart);
+  };
+
+  let minus = (kk) => {
+    let updatedcart = cartitem.map((item) => {
+      if (item.id === kk && item.quantity > 1) {
+        return { ...item, quantity: item.quantity - 1 };
+      }
+      return item;
+    });
+    localStorage.setItem("info", JSON.stringify(updatedcart));
+    setcartitem(updatedcart);
+    settocart(updatedcart);
   };
 
   return (
@@ -21,11 +55,11 @@ const Cart = ({ kcart }) => {
               <h5>
                 Qty :{" "}
                 <span>
-                  <FaMinusCircle /> {item.quantity} <FaPlusCircle />
+                  <FaMinusCircle onClick={() => minus(item.id)} /> {item.quantity} <FaPlusCircle onClick={() => plus(item.id)} />
                 </span>
               </h5>
               <h5>Amount : ₹ {item.quantity * item.price}</h5>
-              <button onClick={() => removeFromCart(item.id)}>Remove</button>
+              <button className="btn btn-danger" onClick={() => remove(item.id)}>Remove</button>
             </div>
           </div>
           <hr />

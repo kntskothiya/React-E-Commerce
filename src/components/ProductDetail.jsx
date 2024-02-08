@@ -6,7 +6,7 @@ import cloth from "../clothinfo.json";
 const ProductDetails = ({ cartitem }) => {
   let { id } = useParams();
   let [single, setsingle] = useState(false);
-  let [quantity, setQuantity] = useState(1);
+  let [quantity, setquantity] = useState(1);
 
   let clothdata = cloth.productsdata.find((clothwear) => clothwear.id == id);
 
@@ -15,7 +15,7 @@ const ProductDetails = ({ cartitem }) => {
     let foundItem = exist.find((item) => item.id === clothdata.id);
     if (foundItem) {
       setsingle(true);
-      setQuantity(foundItem.quantity);
+      setquantity(foundItem.quantity);
     }
   }, [clothdata.id]);
 
@@ -32,7 +32,7 @@ const ProductDetails = ({ cartitem }) => {
     );
   }
 
-  const addToCart = () => {
+  const addtocart = () => {
     if (!single) {
       cartitem({ ...clothdata, quantity });
       let exist = JSON.parse(localStorage.getItem("info")) || [];
@@ -42,28 +42,28 @@ const ProductDetails = ({ cartitem }) => {
     }
   };
 
-  const handlePlus = () => {
-    setQuantity(quantity + 1);
-    updateLocalStorageQuantity(quantity + 1);
+  const plus = () => {
+    setquantity(quantity + 1);
+    updatelsquantity(quantity + 1);
   };
 
-  const handleMinus = () => {
+  const minus = () => {
     if (quantity > 1) {
-      setQuantity(quantity - 1);
-      updateLocalStorageQuantity(quantity - 1);
+      setquantity(quantity - 1);
+      updatelsquantity(quantity - 1);
     }
   };
 
-  const updateLocalStorageQuantity = (updatedQuantity) => {
+  const updatelsquantity = (updatedquantity) => {
     let exist = JSON.parse(localStorage.getItem("info")) || [];
-    let updatedCart = exist.map((item) => {
+    let updatecart = exist.map((item) => {
       if (item.id === clothdata.id) {
-        return { ...item, quantity: updatedQuantity };
+        return { ...item, quantity: updatedquantity };
       } else {
         return item;
       }
     });
-    localStorage.setItem("info", JSON.stringify(updatedCart));
+    localStorage.setItem("info", JSON.stringify(updatecart));
   };
 
   return (
@@ -95,13 +95,13 @@ const ProductDetails = ({ cartitem }) => {
                   <button className="me-5 btn btn-success">Buy Now</button>
                   <button
                     className="me-5 btn btn-warning"
-                    onClick={addToCart}
+                    onClick={addtocart}
                   >Add To cart</button>
                 </div>
               ) : (
                 <div>
                   <button className="me-5 btn btn-success">Buy Now</button>
-                  <button className="me-5 btn btn-warning"> Qty : <FaMinusCircle onClick={handleMinus} /> {quantity} <FaPlusCircle onClick={handlePlus} />
+                  <button className="me-5 btn btn-warning"> Qty : <FaMinusCircle onClick={minus} /> {quantity} <FaPlusCircle onClick={plus} />
                   </button>
                 </div>
               )}
